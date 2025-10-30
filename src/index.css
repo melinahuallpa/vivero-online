@@ -1,0 +1,332 @@
+/* ===== Reset general ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: #fcfcfa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ===== NAVBAR ===== */
+nav {
+  background-color: #3b5d3b;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.8rem;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #6b8e4e;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: white;
+}
+/* ===== INICIO ===== */
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.hero img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  filter: brightness(0.65);
+  border-radius: 10px;
+}
+
+.hero-texto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 80%;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.hero h1 span {
+  color: #b6f2a6;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+/* ===== Cards ===== */
+.info-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  padding: 1rem;
+}
+
+.card-info {
+  background-color: #f4f8f3;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  width: 280px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-info:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+.card-info h3 {
+  color: darkolivegreen;
+  margin-bottom: 0.5rem;
+}
+
+.card-info p {
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 800px) {
+  .hero img {
+    height: 250px;
+  }
+  .info-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+/* ===== Productos ===== */
+#lista-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+  margin-top: 2.5rem;
+}
+
+#lista-productos li {
+  background-color: #f1f4f1;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#lista-productos li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+#lista-productos h3 {
+  color: #3b5d3b;
+  margin-bottom: 0.5rem;
+}
+
+#lista-productos p {
+  color: #555;
+}
+
+/* ===== Carrito ===== */
+#carrito {
+  background-color: #f3f3f3;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.item-carrito {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.item-carrito img {
+  border-radius: 6px;
+  width: 60px;
+}
+
+/* ===== Servicios ===== */
+/* ===== Servicios ===== */
+.servicios-container {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.servicios-container h1 {
+  color: darkolivegreen;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.intro-servicios {
+  color: #333;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.cards-servicios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.servicio-card {
+  background-color: #f8faf7;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.servicio-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.18);
+}
+
+.servicio-card img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 0.8rem;
+}
+
+.servicio-card h3 {
+  color: darkolivegreen;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.servicio-card p {
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.btn-volver {
+  margin-top: 2rem;
+  background-color: darkolivegreen;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-volver:hover {
+  background-color: #6b8e23;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .servicios-container {
+    padding: 1rem;
+  }
+  .cards-servicios {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ===== Footer ===== */
+footer {
+  background-color: #6b8e4e;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 3rem;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  letter-spacing: 0.4px;
+}
+
+/* ===== Layout base ===== */
+main {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* ===== Botones ===== */
+button {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #3b5d3b;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #6b8e4e;
+  transform: translateY(-2px);
+}
+
+/* ===== Imágenes fluidas ===== */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 800px) {
+  main {
+    width: 95%;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  #lista-productos {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
