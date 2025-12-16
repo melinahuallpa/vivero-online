@@ -1,55 +1,77 @@
-import React, { useState } from "react";
-import Inicio from './pages/Inicio'
-import Servicios from './pages/Servicios'
-import Navbar from './pages/Navbar'
-import Productos from './pages/Productos'
-import ProductoDetalle from './pages/DetalleProductos'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import Inicio from "./pages/Inicio";
+import Servicios from "./pages/Servicios";
+import Navbar from "./pages/Navbar";
+import Productos from "./pages/Productos";
+import DetalleProductos from "./pages/DetalleProductos";
 import Pagar from "./pages/Pagar";
-import RutaProtegida from "./pages/RutaProtegida";
+import ProtectedRoute from "./components/ProtectedRoute";
 import IniciarSesion from "./pages/IniciarSesion";
-import Footer from './pages/Footer'
-import { Routes, Route } from 'react-router-dom'
+import Footer from "./pages/Footer";
+
+// ADMIN
+import AdminLayout from "./admin/AdminLayout";
+import DashboardAdmin from "./admin/DashboardAdmin";
+import ProductosAdmin from "./admin/ProductosAdmin";
+import AgregarProducto from "./admin/AgregarProducto";
+import EditarProducto from "./admin/EditarProducto";
 
 function App() {
-
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [usuario, setUsuario] = useState({ nombre: "", email: "" });
-
   return (
     <div>
-      <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} setUsuario={setUsuario} usuario={usuario} />
+      <Navbar />
+
+      {/* 🔔 TOASTIFY GLOBAL */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        pauseOnHover
+        theme="colored"
+      />
+
       <Routes>
-        <Route path='/' element={<Inicio />} />
-        <Route path='/servicios' element={<Servicios />} />
+        {/* PUBLICAS */}
+        <Route path="/" element={<Inicio />} />
+        <Route path="/servicios" element={<Servicios />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/productos/:id" element={<DetalleProductos />} />
 
-        {/* Productos públicos, pero detalle y pagar protegidos */}
-        <Route path='/productos' element={<Productos />} />
-        <Route path='/productos/:id' element={<ProductoDetalle />} />
-        <Route path='/productos/:categoria/:id' element={<ProductoDetalle />} />
+        {/* LOGIN */}
+        <Route path="/iniciar-sesion" element={<IniciarSesion />} />
 
-        <Route path="/iniciar-sesion" element={
-            <IniciarSesion
-              setIsAuthenticated={setIsAuthenticated}
-              setUsuario={setUsuario}
-            />
+        {/* PAGAR */}
+        <Route
+          path="/pagar"
+          element={
+            <ProtectedRoute>
+              <Pagar />
+            </ProtectedRoute>
           }
         />
 
-        <Route path="/pagar" element={
-            <RutaProtegida isAuthenticated={isAuthenticated}>
-              <Pagar
-                setIsAuthenticated={setIsAuthenticated}
-                setUsuario={setUsuario}
-                usuario={usuario}
-              />
-            </RutaProtegida>
+        {/* ADMIN */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute adminOnly>
+              <AdminLayout />
+            </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<DashboardAdmin />} />
+          <Route path="productos" element={<ProductosAdmin />} />
+          <Route path="agregar-producto" element={<AgregarProducto />} />
+          <Route path="editar-producto/:id" element={<EditarProducto />} />
+        </Route>
       </Routes>
+
       <Footer />
     </div>
-  )
+  );
 }
 
-export default App
-
+export default App;

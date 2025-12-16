@@ -1,67 +1,141 @@
-import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import CarritoCompras from "./Carrito";
-import { CartContext } from "../context/CartContext";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ProductosContext } from "../context/ProductosContext";
+import { CarritoContext } from "../context/CarritoContext";
+import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
-const MOCKAPI_URL = "https://68f010480b966ad50031d81b.mockapi.io/productos";
+function Productos() {
+  const { productos, cargando, error } = useContext(ProductosContext);
+  const { addToCart } = useContext(CarritoContext);
+  const { isAuthenticated, user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-export default function Productos() {
-  const [productos, setProductos] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
-  const { agregarAlCarrito } = useContext(CartContext);
-  const { carrito, setCarrito } = useContext(CartContext);
+  // 🔍 BÚSQUEDA
+  const [busqueda, setBusqueda] = useState("");
 
-  useEffect(() => {
-    setCargando(true);
-    fetch(MOCKAPI_URL)
-      .then((res) => {
-        if (!res.ok) throw new Error("Respuesta no OK");
-        return res.json();
-      })
-      .then((datos) => {
-        setProductos(datos);
-        setCargando(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError("Hubo un problema al cargar las plantas. Revisa MOCKAPI_URL.");
-        setCargando(false);
-      });
-  }, []);
+  const productosFiltrados = productos.filter((p) =>
+    p.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
-  const agregar = (producto) => {
-    agregarAlCarrito(producto);
-    alert(`🌿 ${producto.nombre} agregado al carrito`);
-  };
+  // 📄 PAGINACIÓN
+  const [paginaActual, setPaginaActual] = useState(1);
+  const productosPorPagina = 6;
 
-  if (cargando) return <p>Cargando plantas...</p>;
-  if (error) return <p>{error}</p>;
+  const indiceInicial = (paginaActual - 1) * productosPorPagina;
+  const indiceFinal = indiceInicial + productosPorPagina;
+
+  const paginaProductos = productosFiltrados.slice(
+    indiceInicial,
+    indiceFinal
+  );
+
+  const totalPaginas = Math.ceil(
+    productosFiltrados.length / productosPorPagina
+  );
+
+  // ⏳ LOADING / ERROR
+  if (cargando) return <h2>Cargando productos...</h2>;
+  if (error) return <h2 style={{ color: "red" }}>{error}</h2>;
 
   return (
-    <>
-      <ul id="lista-productos">
-        {productos.map((producto) => (
-          <li key={producto.id}>
-            <h2>{producto.nombre}</h2>
-            <p>{producto.descripcion}</p>
-            <p><strong>${producto.precio}</strong></p>
-            <img src={producto.avatar} alt={producto.nombre} width="80%" />
-            <div style={{ marginTop: ".6rem" }}>
-              <Link to={`/productos/${producto.categoria || 'sin-categoria'}/${producto.id}`} state={{producto}}>
-                <button>Más detalles</button>
+      <>
+    <Helmet>
+      <title>Productos | Vivero Urbano</title>
+      <meta
+        name="description"
+        content="Explorá nuestro catálogo de plantas y productos para tu jardín urbano."
+      />
+    </Helmet>
+    <div className="productos-container">
+      <h1>Nuestro Catálogo</h1>
+      <hr />
+
+      {/* 🔍 BUSCADOR */}
+      <input
+        type="text"
+        placeholder="Buscar por nombre..."
+        className="buscador"
+        value={busqueda}
+        onChange={(e) => {
+          setBusqueda(e.target.value);
+          setPaginaActual(1);
+        }}
+      />
+
+      {/* 👑 BOTÓN ADMIN */}
+      {user?.role === "admin" && (
+        <Link to="/agregar-producto">
+          <button className="btn-admin">➕ Agregar producto</button>
+        </Link>
+      )}
+
+      {/* 🧱 GRID DE PRODUCTOS */}
+      <div className="productos-grid">
+        {paginaProductos.map((p) => (
+          <div key={p.id} className="producto-card">
+            <img
+              src={p.imagen}
+              alt={p.nombre}
+              className="producto-img"
+            />
+
+            <h3>{p.nombre}</h3>
+            <p className="precio">${p.precio}</p>
+
+            <div className="botones-card">
+              <Link to={`/productos/${p.id}`}>
+                <button className="btn-detalle">
+                  Ver detalle
+                </button>
               </Link>
-              <button onClick={() => agregar(producto)} style={{ marginLeft: ".6rem" }}>
-                Comprar
+
+              <button
+                className="btn-carrito"
+                onClick={() => {
+                  if (!isAuthenticated) {
+                    toast.error(
+                      "Debes iniciar sesión para agregar al carrito"
+                    );
+                    navigate("/iniciar-sesion");
+                    return;
+                  }
+
+                  addToCart(p);
+                  toast.success("Producto agregado al carrito 🛒");
+                }}
+              >
+                Agregar
               </button>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
 
-      {/* Carrito mostrado debajo */}
-      <CarritoCompras />
-    </>
+      {/* 📄 PAGINACIÓN */}
+      <div className="paginacion">
+        <button
+          disabled={paginaActual === 1}
+          onClick={() => setPaginaActual((prev) => prev - 1)}
+        >
+          ◀ Anterior
+        </button>
+
+        <span>
+          Página {paginaActual} de {totalPaginas}
+        </span>
+
+        <button
+          disabled={paginaActual === totalPaginas}
+          onClick={() => setPaginaActual((prev) => prev + 1)}
+        >
+          Siguiente ▶
+        </button>
+      </div>
+    </div>
+      </>
   );
 }
 
+export default Productos;

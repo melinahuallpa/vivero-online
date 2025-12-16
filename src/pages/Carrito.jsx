@@ -1,45 +1,41 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { CartContext } from "../context/CartContext";
+import { CarritoContext } from "../context/CarritoContext";
+import { Link } from "react-router-dom";
 
-export default function CarritoCompras() {
-  const navigate = useNavigate();
-  const { carrito, setCarrito, vaciarCarrito, quitarDelCarrito, total } = useContext(CartContext);
-
-  const irAPagar = () => {
-    navigate("/pagar", { state: { carrito } });
-  };
+function Carrito() {
+  const { cartItems, removeFromCart, clearCart, total } = useContext(CarritoContext);
 
   return (
-    <div id="carrito">
+    <div>
+      <h1>Carrito de Compras</h1>
       <hr />
-      <h2>Carrito de Compras</h2>
-      {carrito.length === 0 ? (
-        <p>El carrito está vacío</p>
+
+      {cartItems.length === 0 ? (
+        <p>El carrito está vacío 🌿</p>
       ) : (
         <>
-          {carrito.map((item) => (
-            <div key={item.id} className="item-carrito">
-              <img src={item.avatar} alt={item.nombre} width="60" />
-              <div className="item-info">
-                <strong>{item.nombre}</strong>
-                <div>${Number(item.precio).toFixed(2)}</div>
-              </div>
-              <div>
-                <button onClick={() => quitarDelCarrito(item.id)}>Quitar</button>
-              </div>
+          {cartItems.map((item) => (
+            <div key={item.id} className="carrito-item">
+              <img src={item.imagen} alt={item.nombre} width="120" />
+              <h3>{item.nombre}</h3>
+              <p>${item.precio}</p>
+              <button onClick={() => removeFromCart(item.id)}>
+                Quitar
+              </button>
             </div>
           ))}
-          <div>
-            <hr />
-            <div>Total: ${Number(total).toFixed(2)}</div>
-          </div>
-          <div style={{ marginTop: ".6rem" }}>
-            <button onClick={vaciarCarrito}>Vaciar Carrito</button>
-            <button onClick={irAPagar} style={{ marginLeft: ".6rem" }}>Pagar</button>
-          </div>
+
+          <h2>Total: ${total}</h2>
+
+          <button onClick={clearCart}>Vaciar carrito</button>
+
+          <Link to="/pagar">
+            <button>Ir al pago</button>
+          </Link>
         </>
       )}
     </div>
   );
 }
+
+export default Carrito;

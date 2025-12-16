@@ -328,5 +328,313 @@ img {
   }
 }
 
+.producto-card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.producto-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* ---------------------- */
+/*      PANEL ADMIN       */
+/* ---------------------- */
+
+.admin-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.admin-container h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Botón agregar producto */
+.btn-admin {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 20px;
+  transition: 0.2s;
+}
+
+.btn-admin:hover {
+  background-color: #218838;
+}
+
+/* Buscador exclusivo del panel admin */
+.buscador-admin {
+  width: 100%;
+  max-width: 350px;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.buscador-admin:focus {
+  border-color: #4a67ff;
+  box-shadow: 0 0 5px rgba(74, 103, 255, 0.4);
+}
 
 
+/* TABLA ADMIN */
+.tabla-admin {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.tabla-admin thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.tabla-admin th,
+.tabla-admin td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla-admin tbody tr:hover {
+  background-color: #f2f2f2;
+}
+
+/* Imagen dentro de la tabla */
+.tabla-admin img {
+  border-radius: 6px;
+}
+
+/* Botón editar */
+.btn-editar {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: 0.2s;
+}
+
+/* Iconos dentro de botones admin */
+.btn-editar,
+.btn-eliminar,
+.btn-admin {
+  display: inline-flex;
+  align-items: center;
+}
+
+
+.btn-editar:hover {
+  background-color: #0069d9;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-eliminar:hover {
+  background-color: #c82333;
+}
+
+/* PAGINACIÓN */
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.paginacion button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.paginacion button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.paginacion button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+
+/* ---------------------- */
+/*      DASHBOARD     */
+/* ---------------------- */
+
+.dashboard-admin {
+  padding: 40px;
+  text-align: center;
+}
+
+.dashboard-grid {
+  margin-top: 40px;
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  text-decoration: none;
+  color: #333;
+  border: 2px solid #eee;
+  transition: 0.25s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  border-color: #4a67ff;
+  box-shadow: 0 8px 18px rgba(74, 103, 255, 0.2);
+}
+
+/* ==== ADMIN LAYOUT ==== */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  width: 240px;
+  background: #2e4630;
+  color: white;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-title {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.admin-sidebar ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.admin-sidebar a {
+  text-decoration: none;
+  color: #dff7e4;
+  font-size: 1.05rem;
+  transition: 0.2s ease;
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+
+.admin-sidebar a:hover {
+  background: #436b4b;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 40px;
+  background: #f5f7f4;
+}
+
+/* ===== ADMIN HEADER ===== */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.admin-header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .admin-actions {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .admin-actions button {
+    width: 100%;
+  }
+
+  .buscador-admin {
+    width: 100%;
+  }
+}
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}

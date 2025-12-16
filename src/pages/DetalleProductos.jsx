@@ -1,41 +1,46 @@
-import { Link, useParams, useLocation } from "react-router-dom";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
+import React, { useContext } from "react";
+import { useParams, Link } from "react-router-dom";
+import { ProductosContext } from "../context/ProductosContext";
+import { CarritoContext } from "../context/CarritoContext";
+import { AuthContext } from "../context/AuthContext";
 
-const ProductoDetalle = () => {
+function DetalleProductos() {
   const { id } = useParams();
-  const location = useLocation();
-  const producto = location.state?.producto;
-  const { agregarAlCarrito } = useContext(CartContext);
+  const { productos } = useContext(ProductosContext);
+  const { addToCart } = useContext(CarritoContext);
+  const { isAuthenticated } = useContext(AuthContext);
+
+  const producto = productos.find((p) => p.id == id); // aseguramos coincidencia
 
   if (!producto) {
-    return (
-      <div>
-        <p>No se pudo cargar el producto</p>
-        <Link to="/productos">
-          <button>Volver a Productos</button>
-        </Link>
-      </div>
-    );
+    return <h2>Producto no encontrado 🥀</h2>;
   }
 
+  const handleAgregar = () => {
+    if (!isAuthenticated) {
+      alert("Debes iniciar sesión para agregar productos al carrito.");
+      window.location.href = "/iniciar-sesion";
+      return;
+    }
+
+    addToCart(producto);
+    alert("Producto agregado al carrito ✔️");
+  };
+
   return (
-    <>
-      <h2>Detalles del Producto {id}</h2>
-      <div className="detalle-producto">
-        <img src={producto.avatar} alt={producto.nombre} width="40%" />
-        <div>
-          <h3>{producto.nombre}</h3>
-          <p><strong>Descripción:</strong> {producto.descripcion}</p>
-          <p><strong>Precio:</strong> ${producto.precio}</p>
-          <button onClick={() => { agregarAlCarrito(producto); alert("Producto agregado al carrito"); }}>
-            Agregar al carrito
-          </button>
-        </div>
-      </div>
-      <hr />
-      <Link to={`/productos`}><button>Volver</button></Link>
-    </>
+    <div className="detalle-container">
+      <img src={producto.imagen} alt={producto.nombre} width="300" />
+      <h2>{producto.nombre}</h2>
+      <p>{producto.descripcion}</p>
+      <h3>${producto.precio}</h3>
+
+      <button onClick={handleAgregar}>Agregar al carrito</button>
+
+      <br /><br />
+      <Link to="/productos">Volver</Link>
+    </div>
   );
-};
-export default ProductoDetalle;
+}
+
+export default DetalleProductos;
+
